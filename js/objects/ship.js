@@ -30,7 +30,7 @@ var Ship = function(){
 	};
 
 	ship.draw = function(context){
-		var i, cos, sin;
+		var i, cos, sin, xnew, ynew;
 
 		context.beginPath();
 		context.lineWidth = 2;
@@ -40,8 +40,8 @@ var Ship = function(){
 		for(i = 0; i < ship.shipPathLength; i++){
 			sin = Math.sin(ship.angle);
 			cos = Math.cos(ship.angle);
-			var xnew = ship.path[i].x * cos - ship.path[i].y * sin;
-			var ynew = ship.path[i].x * sin + ship.path[i].y * cos;
+			xnew = ship.path[i].x * cos - ship.path[i].y * sin;
+			ynew = ship.path[i].x * sin + ship.path[i].y * cos;
 			context.lineTo(xnew + ship.x, ynew + ship.y);
 		}
 		context.closePath();
