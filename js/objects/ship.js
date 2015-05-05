@@ -4,15 +4,16 @@ var Ship = function(){
 	ship.shipPathLength = 0;
 	ship.x = 100;
 	ship.y = 100;
+	ship.angle = 0;
 	ship.forwardMomentum = 0;
 	ship.angularMomentum = 0;
 
 	ship.moveRight = function(){
-		ship.x += 10;
+		ship.angularMomentum = 0.4;
 	};
 
 	ship.moveLeft = function(){
-		ship.x -= 10;
+		ship.angularMomentum = -0.4;
 	};
 
 	ship.moveUp = function(){
@@ -24,11 +25,12 @@ var Ship = function(){
 	};
 
 	ship.updatePosition = function(){
-
+		ship.angle = ship.angle += ship.angularMomentum;
+		ship.angularMomentum = ship.angularMomentum / 1.2;
 	};
 
 	ship.draw = function(context){
-		var i;
+		var i, cos, sin;
 
 		context.beginPath();
 		context.lineWidth = 2;
@@ -36,7 +38,11 @@ var Ship = function(){
 
 		// draw ship lines
 		for(i = 0; i < ship.shipPathLength; i++){
-			context.lineTo(ship.path[i].x + ship.x, ship.path[i].y + ship.y);
+			sin = Math.sin(ship.angle);
+			cos = Math.cos(ship.angle);
+			var xnew = ship.path[i].x * cos - ship.path[i].y * sin;
+			var ynew = ship.path[i].x * sin + ship.path[i].y * cos;
+			context.lineTo(xnew + ship.x, ynew + ship.y);
 		}
 		context.closePath();
 		context.stroke();
