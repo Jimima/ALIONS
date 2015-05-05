@@ -58,7 +58,7 @@ var Ship = function(){
 	};
 
 	(function(){
-		var cos, sin, xnew, ynew;
+		var cos, sin, xnew, ynew, i;
 		ship.path.push({x: 0, y: -50});
 		ship.path.push({x: -30, y: 50});
 		ship.path.push({x: 0, y: 30});
@@ -66,7 +66,7 @@ var Ship = function(){
 		cos = Math.cos(90 * Math.PI / 180);
 		sin = Math.sin(90 * Math.PI / 180);
 		ship.shipPathLength = ship.path.length;
-		for(var i = 0; i < ship.shipPathLength; i++){
+		for(i = 0; i < ship.shipPathLength; i++){
 			xnew = ship.path[i].x * cos - ship.path[i].y * sin;
 			ynew = ship.path[i].x * sin + ship.path[i].y * cos;
 			ship.path[i].x = xnew;
