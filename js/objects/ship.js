@@ -5,11 +5,13 @@ var Ship = function(){
 	ship.x = 100;
 	ship.y = 100;
 	ship.angle = 0;
-	ship.forwardMomentum = 0;
+	ship.xvelocity = 0;
+	ship.yvelocity = 0;
 	ship.angularMomentum = 0;
+	ship.accelRate = 5;
 
-	ship.angleAsDegrees = function(){
-		return ship.angle * Math.PI / 180;
+	ship.angleAsDegrees = function(extraAngle){
+		return (ship.angle + (extraAngle ? extraAngle : 0))* Math.PI / 180;
 	};
 
 	ship.moveRight = function(){
@@ -21,17 +23,32 @@ var Ship = function(){
 	};
 
 	ship.moveUp = function(){
-		ship.forwardMomentum = 10;
+		ship.xvelocity += Math.cos(ship.angleAsDegrees()) * ship.accelRate;
+		ship.yvelocity += Math.sin(ship.angleAsDegrees()) * ship.accelRate;
 	};
 
 	ship.moveDown = function(){
-		ship.forwardMomentum = -10;
+		ship.xvelocity -= Math.cos(ship.angleAsDegrees()) * ship.accelRate;
+		ship.yvelocity -= Math.sin(ship.angleAsDegrees()) * ship.accelRate;
+	};
+
+	ship.moveA = function(){
+		ship.xvelocity += Math.cos(ship.angleAsDegrees(-90)) * ship.accelRate;
+		ship.yvelocity += Math.sin(ship.angleAsDegrees(-90)) * ship.accelRate;
+	};
+
+	ship.moveS = function(){
+		ship.xvelocity += Math.cos(ship.angleAsDegrees(90)) * ship.accelRate;
+		ship.yvelocity += Math.sin(ship.angleAsDegrees(90)) * ship.accelRate;
 	};
 
 	ship.updatePosition = function(){
 		ship.angle = ship.angle += ship.angularMomentum;
 		ship.angularMomentum = ship.angularMomentum / 1.2;
-		ship.forwardMomentum = ship.forwardMomentum / 1.1;
+		ship.x += ship.xvelocity;
+		ship.y += ship.yvelocity;
+		ship.xvelocity = ship.xvelocity / 1.05;
+		ship.yvelocity = ship.yvelocity / 1.05;
 	};
 
 	ship.draw = function(context){
@@ -43,9 +60,6 @@ var Ship = function(){
 
 		sin = Math.sin(ship.angle * Math.PI / 180);
 		cos = Math.cos(ship.angle * Math.PI / 180);
-
-		ship.x += cos * ship.forwardMomentum;
-		ship.y += sin * ship.forwardMomentum;
 
 		// draw ship lines
 		for(i = 0; i < ship.shipPathLength; i++){

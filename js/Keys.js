@@ -28,5 +28,7 @@ var Keys = function(){
 		keys.moveKeyList.push({direction: "Down", pressed: false, keyNum: 40});
 		keys.moveKeyList.push({direction: "Left", pressed: false, keyNum: 37});
 		keys.moveKeyList.push({direction: "Right", pressed: false, keyNum: 39});
+		keys.moveKeyList.push({direction: "A", pressed: false, keyNum: 65});
+		keys.moveKeyList.push({direction: "S", pressed: false, keyNum: 68});
 	})();
 };
